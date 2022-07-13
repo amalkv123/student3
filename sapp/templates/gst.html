@@ -1,0 +1,265 @@
+{% extends 'base.html' %}
+{% block body %}
+    {% load static %}
+    <style>
+        .enter{
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            
+        }
+    </style>
+
+  <div class="m-0">
+    <h6 style="" class="bg-info text-light p-2 m-0 text-center">GST Details</h6>
+            <form  style="background-color:rgba(0,0,0,.4);" method="post" action="save_ledger">
+                {% csrf_token %}
+                
+                
+                    
+                   
+                <div class="row container-fluid  p-0 m-0" style=" border: 1px solid rgba(128, 128, 128, 0.6);">
+                    <div class="col-sm-6 m-0 p-4" style=" border-right: 1px solid rgba(128, 128, 128, 0.6);">
+                        
+
+                        <div class="row container-fluid  p-0 m-0">
+                            <h5 class="text-center  ">GST Registration Details</h5>
+                            <div class="row container-fluid  p-2 m-0">
+                                <div class="col-sm-6 m-0 p-0"> <label for="pan">State</label></div>
+                                <div class="col-sm-6 m-0 p-0">
+                                    <select name="alter_chk_bks" id="chqrng" class="form-control">
+                                        <option value="Earning for Employees">Earning for Employees</option>
+                                        <option value="Employees Statutory Deductions">Employees Statutory Deductions</option>  
+                                        <option value="Employer's Statutory Contributions">Employer's Statutory Contributions</option>
+                                        <option value="Gratuity">Gratuity</option>
+                                        <option value="Loans and Advances">Loans and Advances</option>
+                                        <option value="Reimbursements to Employees">Reimbursements to Employees</option>
+                                        <option value="Not Applicable">Not Applicable</option>
+                                        
+                                    </select>
+                                </div>
+                                
+                            </div>
+                    
+                        </div>
+                   
+                  
+                            
+
+
+    <div class="bankac hide p-0 m-0 w-100" id="bankac">
+        
+        <!-- <h6 class="p-3">Bank Account Details</h6> -->
+
+        <div class="row container-fluid  p-2 m-0">
+            <div class="col-sm-6 m-0 p-0"> <label for="pan">Registration Type</label></div>
+            <div class="col-sm-6 m-0 p-0">
+                <select name="alter_chk_bks" id="chqrng" class="form-control">
+                    <option value="Composition">Composition</option>
+                    <option value="Regular">Regular</option>  
+                    
+                </select>
+
+
+            </div>
+            
+        </div>
+
+        <div class="row container-fluid  p-2 m-0">
+            <div class="col-sm-6 m-0 p-0"> <label for="pan">Assessee of Other Teretory</label></div>
+            <div class="col-sm-6 m-0 p-0">
+                <select name="alter_chk_bks" id="chqrng" class="form-control">
+                    <option value="no">No</option>
+                    <option value="yes">Yes</option>  
+                   
+                </select>
+            </div>
+            
+        </div>
+
+        <div class="row container-fluid  p-2 m-0">
+            <div class="col-sm-6 m-0 p-0"> <label for="pan">GST Applicable from</label></div>
+            <div class="col-sm-6 m-0 p-0">
+                <input type="date" name="date" class="form-control">
+            </div>
+            
+        </div>
+
+        <div class="row container-fluid  p-2 m-0">
+            <div class="col-sm-6 m-0 p-0"> <label for="pan">GSTIN/UIN</label></div>
+            <div class="col-sm-6 m-0 p-0"><input type="text" class="form-control" id="swift" placeholder="" name="swift_code"></div>
+            
+        </div>
+
+        <div class="row container-fluid   p-2 m-0">
+            <div class="col-sm-6 m-0 p-0"> <label for="rgtype" >Periodicity of GSTR1</label></div>
+            <div class="col-sm-6 m-0 p-0">
+                <select name="bank_name" id="" class="form-control">
+                    <option value="Monthly">Monthly</option> 
+                    <option value="Quaterly">Quaterly</option> 
+                    
+                </select>
+            </div>
+        </div>
+
+        <div class="row container-fluid  p-0 m-0 mt-8" style="margin-top: 50px;">
+            <h5 class="text-center  " style="margin-top: 60px;">Additional Featchers</h5>
+            <div class="row container-fluid  p-2 m-0">
+                <div class="col-sm-6 m-0 p-0"> <label for="pan">Set\Alter GST rate details</label></div>
+                <div class="col-sm-6 m-0 p-0">
+                    <select name="alter_chk_bks" id="chqrng" class="form-control">
+                        <option value="No">No</option>
+                        
+                        <option value="Yes">Yes</option>
+                        
+                    </select>
+                </div>
+                
+            </div>
+
+            <div class="row container-fluid  p-2 m-0">
+                <div class="col-sm-6 m-0 p-0"> <label for="pan">Enable tax liability on advance receipts</label></div>
+                <div class="col-sm-6 m-0 p-0">
+                    <select name="alter_chk_bks" id="chqrng" class="form-control">
+                        <option value="No">No</option>
+                        
+                        <option value="Yes">Yes</option>
+                        
+                    </select>
+                </div>
+                
+            </div>
+    
+            <div class="row container-fluid  p-2 m-0">
+                <div class="col-sm-6 m-0 p-0"> <label for="pan">Enable tax liability on reverse charge</label></div>
+                <div class="col-sm-6 m-0 p-0">
+                    <select name="alter_chk_bks" id="chqrng" class="form-control">
+                        <option value="No">No</option>
+                        
+                        <option value="Yes">Yes</option>
+                        
+                    </select>
+                </div>
+                
+            </div>
+    
+        </div>
+
+        
+        
+
+
+
+
+    </div>
+
+
+                    </div>
+                    <div class="col-sm-6 m-0 p-4" style=" border-right: 1px solid rgba(128, 128, 128, 0.6);">
+
+                        <h5 class=" col-sm-12-m-0 p-0 text-center mb-2">Invoice Featchers</h5>
+                        
+        <div class="row container-fluid   p-2 m-0">
+            <div class="col-sm-6 m-0 p-0 mt-2"> <label for="rgtype" >E-Way Bill Applicable</label></div>
+            <div class="col-sm-6 m-0 p-0">
+                <select name="enbl_chk_printing" id="chqprnt" class="form-control">
+                    <option value="Yes">Yes</option>
+                    <option value="No">No</option>  
+                   
+                    
+                </select>
+            </div>
+        </div>
+
+        <div class="row container-fluid  p-2 m-0">
+            <div class="col-sm-6 m-0 p-0"> <label for="pan">Applicable from</label></div>
+            <div class="col-sm-6 m-0 p-0">
+                <input type="date" name="date" class="form-control">
+            </div>
+            
+        </div>
+
+        <div class="row container-fluid   p-2 m-0">
+            <div class="col-sm-6 m-0 p-0 mt-0"> <label for="rgtype" >Thresholt Limit Includes</label></div>
+            <div class="col-sm-6 m-0 p-0">
+                <select name="enbl_chk_printing" id="chqprnt" class="form-control">
+                    <option value="Invoice Value">Invoice Value</option>
+                    <option value="Taxable and Exempt good values">Taxable and Exempt good values</option>
+                    <option value="Taxable good value">Taxable good value</option>  
+                   
+                    
+                </select>
+            </div>
+        </div>
+
+        <div class="row container-fluid  p-2 m-0">
+            <div class="col-sm-6 m-0 p-0"> <label for="pan">Thresholt Limit</label></div>
+            <div class="col-sm-6 m-0 p-0">
+                <input type="text" name="limit" class="form-control">
+            </div>
+            
+        </div>
+
+        <div class="row container-fluid   p-2 m-0">
+            <div class="col-sm-6 m-0 p-0 mt-0"> <label for="rgtype" >Applicable For Infrastate</label></div>
+            <div class="col-sm-6 m-0 p-0">
+                <select name="enbl_chk_printing" id="chqprnt" class="form-control">
+                    <option value="No">No</option>
+                    <option value="Yes">Yes</option>
+                    
+                   
+                    
+                </select>
+            </div>
+        </div>
+
+        <div class="row container-fluid  p-2 m-0">
+            <div class="col-sm-6 m-0 p-0"> <label for="pan">Thresholt Limit</label></div>
+            <div class="col-sm-6 m-0 p-0">
+                <input type="text" name="limit" class="form-control">
+            </div>
+            
+        </div>
+
+        
+
+
+                        
+
+                    
+                            </div>
+
+
+
+
+
+                    <!-- <div class="row container-fluid p-0 m-0">
+                        <div class="col-sm-6-p-2 m-2">
+                            <h5 class="text-center">Rounding of Information</h5>
+                            <div class="col-sm-3-m-0 p-0"><label>Round method</label></div>
+                            <div class="col-sm-3-m-0 p-0">
+                                <select name="enbl_chk_printing" id="chqprnt" class="form-control">
+                                    <option value="">On current Deduction Total</option>
+                                    <option value="">On current Earning Total</option>  
+                                    <option value="">On current Sub Total</option> 
+                                    <option value="">On Specified Formula</option> 
+                                    
+                                </select>
+                            </div>
+                        </div>
+                    </div> -->
+
+<!-- 
+<style>
+    .hide{
+        display: none;
+        align-items:center;
+        justify-content:center;
+        flex-direction: column;
+    }
+</style> -->
+
+
+
+
+{% endblock %}

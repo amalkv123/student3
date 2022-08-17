@@ -1,19 +1,7 @@
-import email
-from unicodedata import name
 from django.db import models
-
-# Create your models here.
-
-class student_details(models.Model):
-    student_name=models.CharField(max_length=255)
-    email=models.EmailField()
-    gender=models.CharField(max_length=255)
-    qulification=models.CharField(max_length=255)
-    age=models.IntegerField()
-    phone_number=models.CharField(max_length=255)
-    date=models.DateField()
-    address=models.CharField(max_length=255)
-
+from django.template.defaultfilters import slugify
+from django.urls import reverse
+from django.contrib.auth.models import User
 
 
 class crtcompony(models.Model):
@@ -44,8 +32,9 @@ class empgroup2(models.Model):
     groupunder = models.CharField (max_length=50)
 
 
-class Employee(models.Model):
 
+class Employee(models.Model):
+    
     name = models.CharField(max_length=225)
     alias= models.CharField(max_length=225)
     under= models.CharField(max_length=225)
@@ -62,7 +51,7 @@ class Employee(models.Model):
     spouse_name =models.CharField(max_length=225)
     address =models.CharField(max_length=225)
     number =models.CharField(max_length=225)
-    emailid =models.CharField(max_length=225)
+    email =models.CharField(max_length=225)
     inc_tax_no =models.CharField(max_length=225)
     aadhar_no=models.CharField(max_length=225)
     uan =models.CharField(max_length=225)
@@ -70,6 +59,23 @@ class Employee(models.Model):
     pran =models.CharField(max_length=225)
     esin =models.CharField(max_length=225)
     bankdtls=models.CharField(max_length=225)
+
+
+class add_bank(models.Model):
+    employee_id= models.ForeignKey(Employee, on_delete=models.CASCADE, null=True, blank=True)
+    Acount_No=models.CharField(max_length=225)
+    IFSC_code=models.CharField(max_length=225)
+    Bank_name=models.CharField(max_length=225)
+    Branch_name=models.CharField(max_length=225)
+    Transaction_type=models.CharField(max_length=225)
+
+
+class E_found_trasfer(models.Model):
+    employee_id= models.ForeignKey(Employee, on_delete=models.CASCADE, null=True, blank=True)
+    Acount_No=models.CharField(max_length=225)
+    IFSC_code=models.CharField(max_length=225)
+    Bank_name=models.CharField(max_length=225)
+    Cheque=models.CharField(max_length=225)
 
 class create_VoucherModels(models.Model):
     voucher_name = models.CharField(max_length=225)
@@ -114,6 +120,92 @@ class create_payhead(models.Model):
     leave_withpay=models.CharField(max_length=225)
     leave_with_out_pay=models.CharField(max_length=225)
     production_type=models.CharField(max_length=225)
-    opening_balance=models.CharField(max_length=225)
+    opening_balance=models.CharField(max_length=225) 
+    
+
+
+
+class compute_information(models.Model):
+    Pay_head_id = models.ForeignKey(create_payhead, on_delete=models.CASCADE, null=True, blank=True)
+    compute=models.CharField(max_length=225,default="Null")
+    effective_from=models.CharField(max_length=225,default="NULL")
+    amount_greater=models.CharField(max_length=225,default="NULL")
+    amount_upto=models.CharField(max_length=225,default="NULL")
+    slab_type=models.CharField(max_length=225,default="NULL")
+    value=models.CharField(max_length=225,default="NULL")
+
+
+
+class Rounding(models.Model):
+    pay_head_id = models.ForeignKey(create_payhead, on_delete=models.CASCADE, null=True, blank=True)
+    Rounding_Method =models.CharField(max_length=225,default="Null",blank=True)
+    Round_limit = models.CharField(max_length=22,default="Null",blank=True)
+
+
+class gratuity(models.Model):
+    pay_head_id=models.ForeignKey(create_payhead, on_delete=models.CASCADE, null=True, blank=True)
+    days_of_months=models.CharField(max_length=225)
+    number_of_months_from=models.CharField(max_length=225)
+    to=models.CharField(max_length=225)
+    calculation_per_year=models.CharField(max_length=225)   
+
+
+class units(models.Model):
+    type= models.CharField(max_length=225)
+    symbol=models.CharField(max_length=225)
+    formal_name=models.CharField(max_length=225)
+    number_of_decimal_places=models.CharField(max_length=225)
+    first_unit=models.CharField(max_length=225)
+    conversion=models.CharField(max_length=225)
+    second_unit=models.CharField(max_length=225)
+
+
+
+class gst(models.Model):
+    state= models.CharField(max_length=225)
+    type=models.CharField(max_length=225)
+    teretory=models.CharField(max_length=225)
+    uin=models.CharField(max_length=225)
+    gstr1=models.CharField(max_length=225)
+    kerala=models.CharField(max_length=225)
+    set=models.CharField(max_length=225)
+    enable= models.CharField(max_length=225)
+    enable2=models.CharField(max_length=225)
+    enable3=models.CharField(max_length=225)
+    bond=models.CharField(max_length=225)
+    taxrate=models.CharField(max_length=225)
+    basistax=models.CharField(max_length=225)
+    purchase=models.CharField(max_length=225)
+    eway=models.CharField(max_length=225)
+    applicable=models.CharField(max_length=225)
+    thresholt=models.CharField(max_length=225)
+    limit=models.CharField(max_length=225)
+    infrastate=models.CharField(max_length=225)
+    thresholt2=models.CharField(max_length=225)
+    invoice=models.CharField(max_length=225)
+    einvoice=models.CharField(max_length=225)
+
+
+
+class create_salary(models.Model):
+    name= models.CharField(max_length=225)
+    under=models.CharField(max_length=225)
+    effective = models.CharField(max_length=225)
+    payhead=models.CharField(max_length=225)
+    rate=models.CharField(max_length=225)
+    per=models.CharField(max_length=225)
+    payheaad_type=models.CharField(max_length=225)
+    calculation_type=models.CharField(max_length=225)
+
+
+class bank3(models.Model):
+    name =models.CharField(max_length=225)
+    
+
+
+
+     
+
+
    
     

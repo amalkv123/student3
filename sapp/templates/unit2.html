@@ -46,26 +46,23 @@
 <div class="container">
 <div class="form1"style=" background-color:rgba(0,0,0,0.3);">
     <a href="javascript:history.go(-1);" class="close">+</a>
-    <h5 style="background-color:rgb(103, 175, 220) ; color:white; text-align: center; padding: 5px 0; width:100%;">List of Employee </h5>
+    <h5 style="background-color:rgb(103, 175, 220) ; color:white; text-align: center; padding: 5px 0; width:100%;">Unit Creation</h5>
     <form action="" method="post">
     
         
-        <a href="employee2"><h8 style="text-align:left; margin-left: 320px;">Create </h8></a><br>
-        <a href="changecompany"><h8 style="text-align:left; margin-left: 320px;">Back</h8></a><br>
+        <a href="unit"><h7 style="text-align:left; margin-left: 320px;">Create </h7></a><br>
+        <a href="javascript:history.go(-1);"><h8 style="text-align:left; margin-left: 320px;">Back</h8></a><br>
         
         
         <hr>
 
         {% for p in data %}
-        <div class="row container-fluid  p-0 m-0">
             
-               <div class="col-sm-9 m-0 p-0"> <a href="#"><h7>{{p.name}}</h7></div>
-                <div class="col-sm-3 m-0 p-0"><i class=" bx bx-caret-right">{{ p.under}}</i></a></div>
-                
-                
-                
-            </div>
+                <a href="{% url 'unit_edit' p.id %}"><h6 style="text-align:left;">{{p.symbol}}</h7></a><br>
+            
+                <a href="{% url 'unit_edit' p.id %}"><h6 style="text-align:left;">{{p.first_unit}}  {{p.conversion}} {{p.second_unit}}</h7></a><br>
+           
         {% endfor %}
-        
+    </form>   
 </div>
 {% endblock %}

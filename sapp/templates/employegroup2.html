@@ -57,13 +57,14 @@
         <hr>
 
         {% for p in data %}
-        <div>
-            <ul class="navbar-nav">
-                <li><a href="{% url 'emp_gredit' p.id %}"><i><h7>{{p.groupname}}</h7>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</i><i class=" bx bx-caret-right">{{ p.groupunder}}</i></a></li>
+        <div class="row container-fluid  p-0 m-0">
+            
+               <div class="col-sm-9 m-0 p-0"> <a href="{% url 'emp_gredit' p.id %}"><h7>{{p.groupname}}</h7></div>
+                <div class="col-sm-3 m-0 p-0"><i class=" bx bx-caret-right">{{ p.groupunder}}</i></a></div>
                 
                 
                 
-            </ul></div>
+            </div>
         {% endfor %}
         
 </div>

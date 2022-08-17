@@ -8,22 +8,11 @@
             justify-content: center;
             
         }
-        .form-popup {
-            visibility: hidden;   
-           
-            
-            background-color: rgb(46, 63, 99); 
-            border: 1px solid #f1f1f1;
-            z-index: 9;
-            width: 300px;
-            height: 200px;
-        
-        }
     </style>
 
   <div class="m-0">
     <h6 style="" class="bg-info text-light p-2 m-0 text-center">Pay Head Creation</h6>
-            <form action="{% url 'add_payhead' %}"  style="background-color:rgba(0,0,0,.4);" method="post" >
+            <form action="{% url 'payhead_edit2' p.id %}"  style="background-color:rgba(0,0,0,.4);" method="post" >
                 {% csrf_token %}
                 
                 <div class="row container-fluid p-0 m-0" >
@@ -32,13 +21,13 @@
 
                         <div class="row container-fluid  p-2 m-0">
                             <div class="col-sm-4 m-0 p-0"> <label for="a" >Name</label></div>
-                            <div class="col-sm-8 m-0 p-0"><input required type="text" class="form-control" id="ab" oninput="shw()" placeholder="" name="name" ></div>
+                            <div class="col-sm-8 m-0 p-0"><input required type="text" class="form-control" id="ab" oninput="shw()" placeholder="" name="name" value="{{ p.name }}"></div>
                         </div>
 
                         <div class="row container-fluid  p-2 m-0">
                             <div class="col-sm-4 m-0 p-0"> <label for="b">Alias</label></div>
                             <div class="col-sm-8 m-0 p-0"> 
-                            <input type="text" class="form-control" id="b" placeholder="" name="alias"></div>
+                            <input type="text" class="form-control" id="b" placeholder="" name="alias" value="{{ p.alias }}"></div>
                         </div>
 
 
@@ -66,9 +55,10 @@
                         <div class="row container-fluid  p-0 m-0">
                             <h5 class="text-center">Pay head Information</h5>
                             <div class="row container-fluid  p-2 m-0">
-                                <div class="col-sm-6 m-0 p-0"> <label for="pan">Pay Head Type </label></div>
+                                <div class="col-sm-6 m-0 p-0"> <label for="pan">Pay Head Type Type</label></div>
                                 <div class="col-sm-6 m-0 p-0">
                                     <select name="payhead" id="pht" onchange="pay()" class="form-control">
+                                        <option value="{{ p.pay_type }}">{{ p.pay_type }}</option>
                                         <option value="Earning for Employees">Earning for Employees</option>
                                         <option value="Deduction From Employees">Deduction From Employees</option>
 
@@ -112,13 +102,13 @@
         <div class="row container-fluid  p-2 m-0" id="under">
             <div class="col-sm-6 m-0 p-0"> <label for="pan">Under</label></div>
             <div class="col-sm-6 m-0 p-0">
-                <input name="under" id="first" class="form-control" onclick="showList2()">
-                   <!----<option value="Direct Expenses">Direct Expenses</option>
+                <select name="under" id="chqrng" class="form-control">
+                    <option value="Direct Expenses">Direct Expenses</option>
                     <option value="Expenses (Direct)">Expenses (Direct)</option>  
                     <option value="Expenses (Indirect)">Expenses (Indirect)</option>  
-                    <option value="Misc.Expenses (ASSET)">Misc.Expenses (ASSET)</option>  -->
+                    <option value="Misc.Expenses (ASSET)">Misc.Expenses (ASSET)</option>  
                     
-                
+                </select>
             </div>
             
         </div>
@@ -223,7 +213,7 @@
 
         <div class="row container-fluid  p-2 m-0" id="ndp">
             <div class="col-sm-6 m-0 p-0"> <label for="pan">Name to be displayed in payslip</label></div>
-            <div class="col-sm-6 m-0 p-0"><input type="text" class="form-control" id="vc" placeholder="" name="payslip"></div>
+            <div class="col-sm-6 m-0 p-0"><input type="text" class="form-control" id="vc" placeholder="" name="payslip" value="{{ p.payslip }}"></div>
             
         </div>
 
@@ -241,16 +231,16 @@
         
 
         <div class="row container-fluid   p-2 m-0" id="cty">
-            <div class="col-sm-6 m-0 p-0"> <label for="rgtype" > Calculation type</label></div>
+            <div class="col-sm-6 m-0 p-0"> <label for="rgtype" >As Calculation type</label></div>
             <div class="col-sm-6 m-0 p-0">
-                <select name="caltype" onchange="show()" id="cal" class="form-control">
-                    <option value="As User Defined Value">As User Defined Value</option>
+                <input name="caltype" onclick="show()" id="cal" class="form-control" value="{{ p.cal_type}}">
+                    <!--<option value="As User Defined Value">As User Defined Value</option>
                     <option value="As Computer Value">As Computer Value</option>  
                     <option value="Flat Rate">Flat Rate</option>
                     <option value="On Attendence">On Attendence</option>
                     <option value="On Production">On Production</option>
         
-                </select>
+                </select>-->
             </div>
         </div>
 
@@ -268,8 +258,12 @@
         <div class="row container-fluid hide  p-2 m-0" id="att">
             <div class="col-sm-6 m-0 p-0"> <label for="rgtype" >Attendance/leave with pay</label></div>
             <div class="col-sm-6 m-0 p-0">
-                <input name="attendence with pay" onclick="showList3()" id="atp" class="form-control">
+                <select name="attendence with pay" onchange="attendence()" id="atp" class="form-control">
+                    <option value=""></option> 
+                    <option value="Not Applicable">Not Applicable</option> 
                     
+                    
+                </select>
             </div>
         </div>
 
@@ -300,7 +294,7 @@
 
         <div class="row container-fluid hide  p-2 m-0" id="ptype">
             <div class="col-sm-6 m-0 p-0"> <label for="pan">Production Type</label></div>
-            <div class="col-sm-6 m-0 p-0"><input type="text" class="form-control"  placeholder="" name="ptype"></div>
+            <div class="col-sm-6 m-0 p-0"><input type="text" class="form-control"  placeholder="" name="ptype" value="{{ p.production_type }}"></div>
             
         </div>
 
@@ -349,7 +343,7 @@
                                         </select>
                                     </th>
                                     <td></td>
-                                    <td><input name="amount_upto" class="w-100 text-white form-control" type="text" style="background-color:rgba(0, 0, 0, 0.2);"></td>
+                                    <td><input name="amount_upto" class="w-100 text-white form-control" type="text" style="background-color:rgba(0, 0, 0, 0.2);" value="{{ p2.amount_upto }}"></td>
                                     <td>
                                         <select name="slab_type" onchange="pv()" id="pk" class="w-100 form-control">
                                             <option value=""></option>
@@ -358,7 +352,7 @@
                                             
                                         </select>
                                     </td>
-                                    <td><input name="value"  class="w-100 form-control text-white text-center" id="vck" type="text" style="background-color:rgba(0, 0, 0, 0.2);"></td>
+                                    <td><input name="value"  class="w-100 form-control text-white text-center" id="vck" type="text" style="background-color:rgba(0, 0, 0, 0.2);" value="{{ p2.value }}"></td>
                                   </tr>
                                   <tr>
                                     <!-- <th scope="row">2</th>
@@ -378,7 +372,7 @@
                               <div class="row container-fluid   p-2 m-0">
                                 <div class="col-sm-6 m-0 p-0 mt-2"> <label for="rgtype" >Gratuity Days of a Months</label></div>
                                 <div class="col-sm-6 m-0 p-0">
-                                    <input type="number" name="days_of_months" class="form-control w-50">
+                                    <input type="number" name="days_of_months" class="form-control w-50" value="{{ p4.days_of_months }}">
                                 </div>
                             </div>
 
@@ -393,9 +387,9 @@
                                 </thead>
                                 <tbody>
                                     <tr>
-                                        <th scope="row"><input name="from" class="w-100 text-white form-control" type="text" style="background-color:rgba(0, 0, 0, 0.2);"></th>
-                                        <td><input name="to" class="w-100 text-white form-control" type="text" style="background-color:rgba(0, 0, 0, 0.2);"></td>
-                                        <td><input name="eligiibility" class="w-100 text-white form-control" type="number" style="background-color:rgba(0, 0, 0, 0.2);"></td>
+                                        <th scope="row"><input name="from" class="w-100 text-white form-control" type="text" style="background-color:rgba(0, 0, 0, 0.2);" value="{{ p4.number_of_months_from }}"></th>
+                                        <td><input name="to" class="w-100 text-white form-control" type="text" style="background-color:rgba(0, 0, 0, 0.2);" value="{{ p4.to }}"></td>
+                                        <td><input name="eligiibility" class="w-100 text-white form-control" type="number" style="background-color:rgba(0, 0, 0, 0.2);" value="{{ p4.calculation_per_year }}"></td>
                                         
                                       </tr>
                                  
@@ -421,7 +415,7 @@
     
                             <div class="row container-fluid  p-2 m-0">
                                 <div class="col-sm-4 m-0 p-0"> <label  >Round Method</label></div>
-                                <div class="col-sm-8 m-0 p-0"> <select name="roundmethod" onchange="rund()" id="rm" class="form-control">
+                                <div class="col-sm-8 m-0 p-0"> <select name="roundmethod" onchange="rund()" id="rm" class="form-control" >
                                     <option value="Not Applicable">Not Applicable</option>
                                     <option value="Downward Rounding">Downward Rounding</option>  
                                     <option value="Normal Rounding">Normal Rounding</option> 
@@ -431,7 +425,7 @@
                             </div>
                             <div class="row container-fluid  hide  p-2 m-0" id="limit">
                                 <div class="col-sm-4 m-0 p-0"> <label for="pan">Limit</label></div>
-                                <div class="col-sm-8 m-0 p-0"><input type="text" class="form-control"  placeholder="" name="limit"></div>
+                                <div class="col-sm-8 m-0 p-0"><input type="text" class="form-control"  placeholder="" name="limit" value="{{ p3.Round_limit }}"></div>
                                 
                             </div>
                         </div> 
@@ -443,7 +437,7 @@
                         <div class="row container-fluid p-0" id="vc4"  style="margin-left: 450px;margin-top: 30px;">
                         <div class="col-sm-3 m-0 p-0"> <p for="setgst" class="text-center p-2 m-0" style="height:100%;" >Opening balance (on 1-Aprl-22)</p></div>
                         <div class="col-sm-2 m-0 p-0">
-                            <input type="text" name="balance" class="form-control" id="ag" ></input>
+                            <input type="text" name="balance" class="form-control" id="ag" value="{{ p.opening_balance }}"></input>
                         </div>
                         <div class="col-sm-0 m-0 p-0">
                             <select name="enbl_chk_printing" id="ag2" class="form-control" onchange="amal()" style="margin-left: 10px;">
@@ -464,80 +458,7 @@
                         
                     
                     
-         </form>    
-
-
-         <!-- list Creation -->
-
-
-<div class="col-sm-3 hide" id="li2" style="margin-left:600px ;margin-top: -330px;background-color:#2f516f ; height: 250px;">
-    <div class="col-sm-12 m-0 p-0">
-        <div class="card-col-sm-12">
-            <div class="card-body">
-                <div class="card-title text-center custom-select-md for">
-                    <h5>List of Attendence Type</h5> <a href="attendence4" style="margin-left: 150px;"><h6>Create</h7></a><hr/>
-                   
-
-                </div>
-                <ul class="list-group ">
-                    <li class="bx bx-caret-right" onclick="hidelist3('Not Applicable')" value="Not Applicable">Not Applicable</li>
-                    {% for p2 in p %}
-                    <div class="row container-fluid  p-0 m-0">
-                       
-                    <div class="col-sm-9 m-0 p-0"><li class="bx bx-caret-right" onclick="hidelist3('{{p2.name}}')" value="{{p2.name}}">{{p2.name}}</li></div>
-                        </div>
-                       
-                    {% endfor %}
-                   
-                  </ul>
-                
-            </div>
-        </div>
-        </div></div>
-         
-         
-         <!-- list Creation -->
-
-<div class="form-popup" id="list" style="margin-top:-440px ; margin-left: 700px;">
-
-    <h6 style="background-color:rgb(17, 169, 240) ;color:white">List of Pay Heads</h6>
-   
-    <div>
-    <table>
-    <tr>
-        <td>
-            <a href="pay_head"
-                style="color: white;margin-left: 310%; width: 20%"
-                
-              >
-                <h6 style="margin-left: 220px;">create</h6>
-               </a>
-        </td>
-    </tr>
-    
-    <tr>
-      <td>    
-    
-        <ul class="list-group ">
-            <h6><li class="list-item ps" onclick="hidelist2('Direct Expenses')" value="Direct Expenses" style="color:white ; margin-left: 18px;">Direct Expenses</li>
-                <li class="list-item ps" onclick="hidelist2('Expenses (Direct)')" value="Expenses (Direct)" style="color:white ; margin-left: 18px;">Expenses (Direct)</li>
-                <li class="list-item ps" onclick="hidelist2('Expenses (Indirect)')" value="Expenses (Indirect)" style="color:white ; margin-left: 18px;">Expenses (Indirect)</li>
-                <li class="list-item ps" onclick="hidelist2('Misc.Expenses (ASSET)')" value="Misc.Expenses (ASSET)" style="color:white ; margin-left: 18px;">Misc.Expenses (ASSET)</li></h5>
-
-        </ul>
-      </td>
-    </tr>  
-    
-    </table>
-    </div>
-    
-    
-    
-    
-    </div></div>
-
-    </div>
-    
+         </form>     
 
 
 
@@ -546,10 +467,6 @@
                     
  
 <style>
-   
-
-
-
     .hide{
         display: none;
         
@@ -578,56 +495,6 @@
 
 
 <script>
-
-function showList3(){
-       document.getElementById('li2').style.display='flex';
-      
-       
-       
-   }
-
-   function hidelist3(valueDIv){
-
-       document.getElementById('li2').style.display='none'
-       document.getElementById('atp').value=valueDIv
-
-        var a =document.getElementById('atp').value;
-        
-        console.log(a);
-        
-        if (a =='Not Applicable'){
-            document.getElementById('att2').style.display='flex';
-            document.getElementById('cp').style.display='flex';
-
-
-        }
-        else{
-            document.getElementById('att2').style.display='none';
-            document.getElementById('cp').style.display='flex';
-
-        }
-       
-       
-
-}
-
-
-
-
-function showList2(){
-    document.getElementById('list').style.visibility="visible";
-    
-    
-}
-
-function hidelist2(valueDIv){
-
-    document.getElementById('list').style.visibility='hidden';
-    document.getElementById('first').value=valueDIv;
-    
-    
-
-}
 
     
 
@@ -695,9 +562,6 @@ function hidelist2(valueDIv){
         console.log(a);
         document.getElementById('vc').value =a;
      }
-
-
-
 
      function attendence(){
         var static =document.getElementById('atp');

@@ -56,9 +56,14 @@
         
         <hr>
 
-        {% for p in data %}
-            <a href="branch"><h8 style="text-align:left;">{{p.componyname}}</h8></a><br>
+        {% for p2 in p %}
+        <div>
+            <ul class="navbar-nav">
+                <li><a href="{% url 'attendence_edit' p2.id %}"><h7>{{p2.name}}</h7></i>
+                
+                
+                
+            </ul></div>
         {% endfor %}
-        
 </div>
 {% endblock %}
